@@ -1,5 +1,10 @@
 const apiRoute = require("express").Router(); // import
 const multer = require("multer");
+const {
+  UserControllerHome,
+  UserControllerBlogs,
+  UserControllerCreateAccount,
+} = require("../controllers/apis/users.api.controller");
 
 const storage = multer.diskStorage({
   destination(request, file, callback) {
@@ -21,22 +26,15 @@ const upload = multer({
   },
 });
 
-apiRoute.get("/", (req, res) => {
-  res.send({ message: "Welcome to the API" });
-});
+apiRoute.get("/", UserControllerHome);
 
-apiRoute.get("/blogs", (req, res) => {
-  res.send({ message: "this are blog list" });
-});
+apiRoute.get("/blogs", UserControllerBlogs);
 
 // client (postman) === request ===> server (express js)
 apiRoute.post(
   "/create-account",
   upload.single("resume"),
-  (request, response) => {
-    let data = request.body;
-    response.send({ message: "account created successfully", data });
-  },
+  UserControllerCreateAccount,
 );
 
 // export the router
