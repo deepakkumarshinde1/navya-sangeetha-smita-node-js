@@ -4,6 +4,7 @@ const {
   UserControllerHome,
   UserControllerBlogs,
   UserControllerCreateAccount,
+  UserControllerMakeLogin,
 } = require("../controllers/apis/users.api.controller");
 
 const storage = multer.diskStorage({
@@ -36,6 +37,8 @@ apiRoute.post(
   upload.single("resume"),
   UserControllerCreateAccount,
 );
+
+apiRoute.post("/login", UserControllerMakeLogin);
 
 // export the router
 module.exports = apiRoute;
